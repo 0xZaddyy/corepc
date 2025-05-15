@@ -1,11 +1,9 @@
-
-
 name: Manage PR
 on:
-  pull_request_target:
-    types: [opened, synchronize, reopened]
+   pull_request_target:
 jobs:
   labeler:
+    name: Apply labels based on file changes
     permissions:
       contents: read
       pull-requests: write
@@ -21,8 +19,8 @@ jobs:
           path: merge
           ref: "refs/pull/${{ github.event.number }}/merge"
       - name: Generate label config
-        run: cd master && SCAN_DIR=../merge ./contrib/gen_label_config.sh
-      - name: Update labels
+        run: cd master && SCAN_DIR=../merge ./contrib/gen_label.sh
+      - name: Apply labels
         uses: actions/labeler@v5
         with:
           configuration-path: master/.github/labeler.yml
