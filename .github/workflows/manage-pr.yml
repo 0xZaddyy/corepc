@@ -21,7 +21,7 @@ jobs:
           path: merge
           ref: "refs/pull/${{ github.event.number }}/merge"
       - name: Generate label config
-        run: cd master && SCAN_DIR=../merge ./contrib/gen_label_config.sh
+        run: cd master && SCAN_DIR=../merge ./contrib/gen_label.sh
       - name: Update labels
         uses: actions/labeler@v5
         with:
