@@ -121,7 +121,7 @@ pub enum Error {
     /// Wrapper of bitcoincore_rpc Error
     Rpc(client_sync::Error),
     /// Returned when calling methods requiring a feature to be activated, but it's not
-    NoFeature,
+    NotFeature,
     /// Returned when calling methods requiring a env var to exist, but it's not
     NoEnvVar,
     /// Returned when calling methods requiring the bitcoind executable but none is found
