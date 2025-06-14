@@ -23,3 +23,4 @@ jobs:
         uses: withgraphite/dismiss-stale-approvals@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          
