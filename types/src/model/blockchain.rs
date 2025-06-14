@@ -212,7 +212,7 @@ pub struct GetBlockHeaderVerbose {
     /// the block hash (same as provided).
     pub hash: BlockHash,
     /// The number of confirmations, or -1 if the block is not on the main chain.
-    pub confirmations: i64,
+    pub confirmations: u32,
     /// The block height or index.
     pub height: u32,
     /// Block version, now repurposed for soft fork signalling.

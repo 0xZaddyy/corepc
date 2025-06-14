@@ -601,7 +601,7 @@ pub struct ListReceivedByAddressItem {
     /// The total amount in BTC received by the address.
     pub amount: f64,
     /// The number of confirmations of the most recent transaction included.
-    pub confirmations: i64,
+    pub confirmations: u32,
     /// The label of the receiving address. The default label is "".
     pub label: String,
     /// The ids of transactions received with the address.
@@ -661,7 +661,7 @@ pub struct ListSinceBlockTransaction {
     ///
     /// Available for 'send' and 'receive' category of transactions. When it's < 0, it means the
     /// transaction conflicted that many blocks ago.
-    pub confirmations: i64,
+    pub confirmations: u32,
     /// The block hash containing the transaction.
     ///
     /// Available for 'send' and 'receive' category of transactions.
@@ -736,7 +736,7 @@ pub struct ListTransactionsItem {
     /// The number of confirmations for the transaction.
     ///
     /// Negative confirmations indicate the transaction conflicts with the block chain.
-    pub confirmations: i64,
+    pub confirmations: u32,
     /// Whether we consider the outputs of this unconfirmed transaction safe to spend.
     pub trusted: bool,
     /// The block hash containing the transaction.

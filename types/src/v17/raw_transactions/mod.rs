@@ -290,7 +290,7 @@ pub struct FundRawTransaction {
     pub fee: f64,
     /// The position of the added change output, or -1.
     #[serde(rename = "changepos")]
-    pub change_position: i64,
+    pub change_position: u32,
 }
 
 /// Result of JSON-RPC method `getrawtransaction` with verbose set to `false`.

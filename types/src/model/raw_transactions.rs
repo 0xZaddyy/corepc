@@ -135,7 +135,7 @@ pub struct FundRawTransaction {
     /// Fee the resulting transaction pays.
     pub fee: Amount,
     /// The position of the added change output, or -1.
-    pub change_position: i64,
+    pub change_position: u32,
 }
 
 /// Models the result of JSON-RPC method `getrawtransaction` with verbose set to `false`.
