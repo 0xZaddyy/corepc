@@ -21,12 +21,20 @@ fn mining__get_block_template__modelled() {
 
     let options = match () {
         #[cfg(feature = "v28_and_below")]
-        () => TemplateRequest { rules: vec![TemplateRules::Segwit] },
-        #[cfg(not(feature = "v28_and_below"))]
         () => TemplateRequest {
+            capabilities: vec![], 
             rules: vec![TemplateRules::Segwit],
             mode: Some("template".to_string()),
-            ..Default::default()
+            longpollid: None,
+            data: None,
+        },
+        #[cfg(not(feature = "v28_and_below"))]
+        () => TemplateRequest {
+            capabilities: vec![],
+            rules: vec![TemplateRules::Segwit],
+            mode: Some("template".to_string()),
+            longpollid: None,
+            data: None,
         }
     };
 
@@ -43,7 +51,7 @@ fn mining__get_mining_info() {
 
     // Up to v28 (i.e., not 29_0) there is no error converting into model.
     #[cfg(feature = "v28_and_below")]
-    let _: mtype::GetMiningInfo = json.into_model();
+    let _: mtype::GetMiningInfo = json.into_model().unwrap();
 
     // v29 onwards
     #[cfg(not(feature = "v28_and_below"))]
@@ -92,7 +100,14 @@ fn mining__submit_block() {
     node2.mine_a_block();
     node3.mine_a_block();
 
-    let options = TemplateRequest { rules: vec![TemplateRules::Segwit] };
+    let options = TemplateRequest {
+        capabilities: vec![],
+        rules: vec![TemplateRules::Segwit],
+        mode: Some("template".to_string()),
+            longpollid: None,
+            data: None,
+    };
+
     let json = node1.client.get_block_template(&options).expect("getblocktemplate");
     let template = json.into_model().expect("GetBlockTemplate into model");
 
@@ -134,7 +149,7 @@ fn submit_empty_block(node: &Node, bt: &mtype::GetBlockTemplate) {
             version: block::Version::default(),
             prev_blockhash: bt.previous_block_hash,
             merkle_root: TxMerkleNode::all_zeros(),
-            time: Ord::max(bt.min_time, std::time::UNIX_EPOCH.elapsed().expect("elapsed").as_secs() as u32) as u32,
+            time: Ord::max(bt.min_time, std::time::UNIX_EPOCH.elapsed().expect("elapsed").as_secs() as u32),
             bits: bt.bits,
             nonce: 0,
         },
@@ -150,7 +165,7 @@ fn submit_empty_block(node: &Node, bt: &mtype::GetBlockTemplate) {
         }
     }
 
-    let _ = node.client.submit_block(&block).expect("submitblock");
+    node.client.submit_block(&block).expect("submitblock");
 }
 
 // FIXME: Submitting this block returns 'inconclusive'.
@@ -208,7 +223,7 @@ fn mining__submit_block_with_dummy_coinbase(node: &Node, bt: &mtype::GetBlockTem
         }
     }
 
-    let _ = node.client.submit_block(&block).expect("submitblock");
+    node.client.submit_block(&block).expect("submitblock");
 }
 
 #[cfg(not(feature = "v17"))]

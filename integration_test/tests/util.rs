@@ -75,7 +75,7 @@ fn util__sign_message_with_priv_key__modelled() {
     // Derive the address from the private key
     let secp = bitcoin::secp256k1::Secp256k1::new();
     let pubkey = privkey.public_key(&secp);
-    let addr = bitcoin::Address::p2pkh(&pubkey, privkey.network);
+    let addr = bitcoin::Address::p2pkh(pubkey, privkey.network);
 
     // Sign the message with the private key
     let json: SignMessageWithPrivKey = node
